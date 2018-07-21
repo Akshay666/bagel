@@ -64,6 +64,10 @@ app.get('/auth/slack/callback',
   }
 );
 
+app.post("/search", (req,res) => {
+  res.send({text: "love bagels"});
+});
+
 // *** Plug the event adapter into the express app as middleware ***
 app.use('/slack/events', slackEvents.expressMiddleware());
 
