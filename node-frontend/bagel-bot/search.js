@@ -34,13 +34,12 @@ const getUsers = (searchText, data, responseUrl, cb) => {
         })
     });
 
-    let info;
+    let info = [];
 
     if(experienced.length) {
         experienced.sort((a, b) => a.score > b.score);
         experienced = experienced.slice(0, maxPeoples);
         experienced.forEach(userObj => {
-
 
             let freqMentioned = users[userObj.user].n_sorted_words.slice(0, maxSkills).map((skillObj) => {
                 let mention = Object.keys(skillObj)[0];
@@ -50,7 +49,7 @@ const getUsers = (searchText, data, responseUrl, cb) => {
             let userComments = users[userObj.user].m_sorted_comments
             let userHasComments = userComments.length;
 
-            info = {
+            info.push({
                 "title": `<@${userObj.user}>${userObj.title ? ", " + userObj.title: ""}`,
                 "text": `_frequently mentions:_ ${freqMentioned} ${userHasComments ? "\n*Top Comments*" : ""}`,
                 "fields": userComments.slice(0, maxComments).map((commentObj) => {
@@ -59,13 +58,13 @@ const getUsers = (searchText, data, responseUrl, cb) => {
                     let commentScore = commentObj[comment];
                     return {value : `*${commentScore}* :arrow_up_small: ${editedComment} ${comment.length > 100 ? "..." : ""}`}
                 }),
-            };
+            });
         });
     }
 
     let response = {
         "text": experienced.length ? "*People* :wave:" : `Nothing found, sorry :(`,
-        "attachments": [info]
+        "attachments": info
     };
 
     fetch(responseUrl, {
