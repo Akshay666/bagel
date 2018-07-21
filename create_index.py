@@ -40,7 +40,7 @@ if __name__ == "__main__":
     ("user1", "fruits", "where can I buy watermelon?", 2),
     ("user5", "engineering", "I am a full-stack engineer.", 3)]
 
-    user_words, user_channels, user_msgs, channel_words = create_index(msgs)
+    user_words, user_channels, user_msgs, channel_words, user_info = create_index(msgs, None)
     print(user_words)
     print(user_channels)
     print(user_msgs)
