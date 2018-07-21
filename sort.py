@@ -26,12 +26,16 @@ def sort(user_words, user_channels, user_messages, channel_words):
 					{message: reactions}
 					for message, reactions in user_messages[user].items()
 				], key=lambda d: -d.items()[0][1])[:m],
+				'k_top_channels': sorted([
+					{channel: counts}
+					for channel, counts in user_channels[user].items()
+				], key=lambda d: -d.items()[0][1])[:m],
 			} for user, uwords in user_words.items()
 		},
 		'channels': {
 			channel: {
 				'n_sorted_words': sorted([
-					{'word': score(word, freq)}
+					{word: score(word, freq)}
 					for word, freq in cwords.items()
 				], key=lambda d: -d.items()[0][1])[:n],
 			} for channel, cwords in user_words.items()
