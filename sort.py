@@ -1,4 +1,5 @@
 import collections
+from nltk import corpus
 
 def sort(user_words, user_channels, user_messages, channel_words, user_info, prior_freq):
 	n = 1000
@@ -9,10 +10,19 @@ def sort(user_words, user_channels, user_messages, channel_words, user_info, pri
 		for word, freq in uwords.items():
 			global_frequencies[word] += freq
 
+	stop_words = set(corpus.stopwords.words('english'))
+
 	def prior(word):
 		return (prior_freq[word] if word in prior_freq else .0) + 1.
 
 	def score(word, freq):
+		if word.upper() in user_words.keys():
+			freq *= 1e-3
+		if word in stop_words:
+			freq *= 1e-3
+		if not word.isalpha():
+			freq *= 1e-3
+
 		return freq / (global_frequencies[word] + prior(word))
 
 	return {

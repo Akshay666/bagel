@@ -26,7 +26,7 @@ def get():
 		) if 'reactions' in message else 0))
 		for channel in channels
 		for message in
-		CLIENT.api_call('conversations.history', channel=channel, limit=1000)['messages']
+		rprint(CLIENT.api_call('conversations.history', channel=channel, limit=1000))['messages']
 		if 'user' in message and 'text' in message
 	]
 
