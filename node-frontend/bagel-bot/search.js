@@ -2,18 +2,19 @@ const fetch = require('node-fetch');
 
 const ngrokBackend = "http://d53bf794.ngrok.io/full_data_raw"
 
-
-const query = (searchText, response_url) => {
+const query = (searchText, responseUrl) => {
     fetch(ngrokBackend)
         .then((response) => response.json())
         .then((data) => {
             let users = data.users;
             let experienced = [];
-            Object.keys(users).forEach((user) => {
-                users[user].n_sorted_words.forEach((wordObj) => {
+            let userNames = Object.keys(users);
+
+            userNames.forEach((userName) => {
+                users[userName].n_sorted_words.forEach((wordObj) => {
                     let word = Object.keys(wordObj)[0];
                     if (word === searchText){
-                        experienced.push({user: user, score: wordObj.score, img: users[user].info.profile.image_original, title: users[user].info.profile.real_name});
+                        experienced.push({user: userName, score: wordObj.score, img: users[userName].info.profile.image_original, title: users[userName].info.profile.real_name});
                     }
                 })
             });
@@ -50,7 +51,7 @@ const query = (searchText, response_url) => {
                 response.text = `Nothing found, sorry :(`
             }
 
-            fetch(response_url, {
+            fetch(responseUrl, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -58,11 +59,15 @@ const query = (searchText, response_url) => {
                 body: JSON.stringify(response),
             })
                 .then((hi)=>{
-                    getChannels(searchText, data, response_url);
+                    getChannels(searchText, data, responseUrl);
                 })
 
         });
 };
+
+const getUsers = (searchText, data, responseUrl) => {
+
+}
 
 const getChannels = (searchText, data, responseUrl) => {
     let channels = data.channels;
@@ -81,35 +86,33 @@ const getChannels = (searchText, data, responseUrl) => {
         })
     });
 
+    let info;
+    const maxLen = 3;
+    experienced.sort((a, b) => a.score > b.score);
+
+    console.log(experienced);
+
+    experienced = experienced.slice(0, maxLen);
+    experienced.forEach(channelObj => {
+
+        info = {
+            "title": `<#${channelObj.channel}>`,
+            "text": `frequently mentions *${searchText}*. It also mentions ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
+                let mention = Object.keys(otherWord)[0];
+                return mention === searchText ? `*${mention}*` : mention
+            }).join(", ")
+                }`,
+            "mrkdwn_in": [
+                "text"
+            ]
+        };
+
+    });
 
     let response = {
-        "text": "*Channels*",
-        "attachments": [],
+        "text": info ? "*Channels*" : "",
+        "attachments" : [info]
     };
-
-     const maxLen = 3;
-        experienced.sort((a, b) => a.score > b.score);
-
-        console.log(experienced);
-
-        experienced = experienced.slice(0, maxLen);
-        experienced.forEach(channelObj => {
-
-            let info = {
-                "title": `<#${channelObj.channel}>`,
-                "text": `frequently mentions *${searchText}*. It also mentions ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
-                    let mention = Object.keys(otherWord)[0];
-                    return mention === searchText ? `*${mention}*` : mention
-                }).join(", ")
-                    }`,
-                "mrkdwn_in": [
-                    "text"
-                ]
-            };
-            console.log("hihihih")
-            response.attachments.push(info);
-        });
-
 
 
     fetch(responseUrl, {
