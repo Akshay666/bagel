@@ -38,7 +38,7 @@ class Handler(BaseHTTPRequestHandler):
 	def do_POST(self):
 		# Doesn't do anything with posted data
 		self._set_headers()
-		self.wfile.write("<html><body><h1>POST!</h1></body></html>")
+		self.wfile.write("please use GET requests")
 
 def run(server_class=HTTPServer, handler_class=Handler, port=80):
 	server_address = ('', port)

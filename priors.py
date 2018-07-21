@@ -7,3 +7,4 @@ def get_prior(file):
 
 if __name__ == "__main__":
     print(get_prior("prior_word_freq.txt"))
+

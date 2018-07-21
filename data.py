@@ -1,5 +1,4 @@
 from slackclient import SlackClient
-import pdb
 import os
 
 # Create a SlackClient for your bot to use for Web API requests
@@ -27,11 +26,17 @@ def get():
 		) if 'reactions' in message else 0))
 		for channel in channels
 		for message in
-		CLIENT.api_call('conversations.history', channel=channel, limit=1000)['messages']
+		rprint(CLIENT.api_call('conversations.history', channel=channel, limit=1000))['messages']
 		if 'user' in message and 'text' in message
 	]
 
-	return messages
+	user_info = {
+		user['id']: user
+		for user in
+		CLIENT.api_call('users.list', limit=1000)['members']
+	}
+
+	return messages, user_info
 
 if __name__ == "__main__":
 	messages = get()
