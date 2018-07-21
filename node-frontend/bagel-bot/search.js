@@ -10,6 +10,10 @@ const query = (searchText, responseUrl) => {
         });
 };
 
+const maxPeoples = 3;
+const maxSkills = 5;
+const maxComments = 2;
+
 const getUsers = (searchText, data, responseUrl, cb) => {
     let users = data.users;
     let experienced = [];
@@ -19,45 +23,78 @@ const getUsers = (searchText, data, responseUrl, cb) => {
         users[userName].n_sorted_words.forEach((wordObj) => {
             let word = Object.keys(wordObj)[0];
             if (word === searchText){
-                experienced.push({user: userName, score: wordObj.score, img: users[userName].info.profile.image_original, title: users[userName].info.profile.real_name});
+                let relevantInfo = {
+                    user: userName,
+                    score: wordObj.score,
+                    img: users[userName].info.profile.image_original,
+                    title: users[userName].info.profile.real_name,
+                }
+                experienced.push(relevantInfo);
             }
         })
     });
-    let response = {
-        "text": "*People* :wave:",
-        "attachments": []
-    };
+
+    let info;
+
     if(experienced.length) {
-        const maxPeople = 3;
-        const maxSkills = 5;
-        const maxComment = 1;
-        experienced.sort((a, b)=> a.score > b.score);
-        experienced = experienced.slice(0,maxPeople);
+        experienced.sort((a, b) => a.score > b.score);
+        experienced = experienced.slice(0, maxPeoples);
         experienced.forEach(userObj => {
-            let info = {
-                "title": `<@${userObj.user}>${userObj.title ? ", " + userObj.title: ""}`,
-                "text": `_frequent mentions:_ ${users[userObj.user].n_sorted_words.slice(0,maxSkills).map((skillObj) => {
+            info = {
+                "title": `<@${userObj.user}>${userObj.title ? ", " + userObj.title : ""}`,
+                "text": `_frequently mentions:_ ${users[userObj.user].n_sorted_words.slice(0, maxSkills).map((skillObj) => {
                     let mention = Object.keys(skillObj)[0];
                     return mention === searchText ? `*${mention}` : mention;
-                }).join(", ")}`,
-                "fields": users[userObj.user].m_sorted_comments.slice(0,maxComment).map((commentObj)=> {
+                }).join(", ")} ${users[userObj.user].m_sorted_comments.length ? "\n*Top Comments*" : ""}`,
+                "fields": users[userObj.user].m_sorted_comments.slice(0, maxComment).map((commentObj) => {
                     let comment = Object.keys(commentObj)[0];
-                    // if(!commentObj[comment]){
-                    //     return false;
-                    // }
-                    return {value:`*${commentObj[comment]} *:arrow_up_small: ${comment.slice(0,100).replace(/\n|\r/g, " ")} ${comment.length > 100 ? "..." : ""}`}
+
+                    comment.match("[.\n!,]")
+
+                    let editedComment = comment.slice(0, 100).replace(/\n|\r/g, " ");
+                    let commentScore = commentObj[comment];
+                    return {value: `*${commentScore}* :thumbsup: ${editedComment}`}
                 }),
                 "thumb_url": userObj.img,
                 "mrkdwn_in": [
                     "text"
                 ]
+            }
+
+
+
+
+
+            let freqMentioned = users[userObj.user].n_sorted_words.slice(0, maxSkills).map((skillObj) => {
+                let mention = Object.keys(skillObj)[0];
+                return mention === searchText ? `*${mention}` : mention;
+            }).join(", ");
+
+            let userComments = users[userObj.user].m_sorted_comments
+            let userHasComments = userComments.length;
+
+            info = {
+                "title": `<@${userObj.user}>${userObj.title ? ", " + userObj.title: ""}`,
+                "text": `_frequently mentions:_ ${freqMentioned} ${userHasComments ? "\n*Top Comments*" : ""}`,
+                "fields": userComments.slice(0, maxComments).map((commentObj) => {
+                    let comment = Object.keys(commentObj)[0];
+
+                    comment.match("[.\n!,]")
+
+                    let editedComment = comment.slice(0, 100).replace(/\n|\r/g, " ");
+                    let commentScore = commentObj[comment];
+                    return {value : `*${commentScore}* :arrow_up_small: ${editedComment} ${comment.length > 100 ? "..." : ""}`}
+                }),
+                
             };
             response.attachments.push(info);
         });
     }
-    else {
-        response.text = `Nothing found, sorry :(`
-    }
+
+    let response = {
+        "text": experienced.length ? "*People* :wave:" : `Nothing found, sorry :(`,
+        "attachments": [info]
+    };
 
     fetch(responseUrl, {
         method: "POST",
@@ -98,7 +135,7 @@ const getChannels = (searchText, data, responseUrl) => {
 
         info = {
             "title": `<#${channelObj.channel}>`,
-            "text": `frequently mentions *${searchText}*. It also mentions ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
+            "text": `_frequently mentions:_ ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
                 let mention = Object.keys(otherWord)[0];
                 return mention === searchText ? `*${mention}*` : mention
             }).join(", ")
@@ -132,7 +169,7 @@ const search = ((req, res) => {
     }
     else {
         query(req.body.text, req.body.response_url);
-        res.send({text: `:tada: You searched for *${req.body.text}*, we think these people/channels could help:`});
+        res.send({text: `:bagel: You searched for *${req.body.text}*, we think these people/channels could help:`});
     }
 
 });
