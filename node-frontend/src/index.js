@@ -6,3 +6,4 @@ export const errorCodes = middlewareErrorCodes;
 export function createSlackEventAdapter(verificationToken, options) {
   return new SlackEventAdapter(verificationToken, options);
 }
+
