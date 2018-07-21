@@ -58,6 +58,10 @@ const getUsers = (searchText, data, responseUrl, cb) => {
                     let commentScore = commentObj[comment];
                     return {value : `*${commentScore}* :arrow_up_small: ${editedComment} ${comment.length > 100 ? "..." : ""}`}
                 }),
+                "thumb_url": userObj.img,
+                "mrkdwn_in": [
+                    "text"
+                ]
             });
         });
     }
