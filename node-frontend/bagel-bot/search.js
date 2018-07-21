@@ -41,6 +41,7 @@ const getUsers = (searchText, data, responseUrl, cb) => {
         experienced = experienced.slice(0, maxPeoples);
         experienced.forEach(userObj => {
 
+
             let freqMentioned = users[userObj.user].n_sorted_words.slice(0, maxSkills).map((skillObj) => {
                 let mention = Object.keys(skillObj)[0];
                 return mention === searchText ? `*${mention}` : mention;
