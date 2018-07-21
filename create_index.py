@@ -1,6 +1,6 @@
 import re
 
-def create_index(messages):
+def create_index(messages, user_info):
     user_words, user_channels, channel_words, user_msgs = {}, {}, {}, {}
     for user, channel, message, n_reactions in messages:
         if user in user_words:
@@ -19,7 +19,7 @@ def create_index(messages):
             c_word_freq[word] = c_word_freq[word]+1.0 if word in c_word_freq else 1.0
         user_words[user] = u_word_freq
         channel_words[channel] = c_word_freq
-    return normalize_freq(user_words), user_channels, user_msgs, normalize_freq(channel_words)
+    return normalize_freq(user_words), user_channels, user_msgs, normalize_freq(channel_words), user_info
 
 def normalize_freq(user_words):
     norm_user_words = {}

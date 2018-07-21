@@ -1,6 +1,6 @@
 import collections
 
-def sort(user_words, user_channels, user_messages, channel_words):
+def sort(user_words, user_channels, user_messages, channel_words, user_info):
 	n = 1000
 	m = 10
 
@@ -18,6 +18,7 @@ def sort(user_words, user_channels, user_messages, channel_words):
 	return {
 		'users': {
 			user: {
+				'info': user_info[user],
 				'n_sorted_words': sorted([
 					{word: score(word, freq)}
 					for word, freq in uwords.items()

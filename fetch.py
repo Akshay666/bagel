@@ -4,7 +4,7 @@ import sort
 
 def fetch():
 	messages = data.get()
-	index = create_index.create_index(messages)
+	index = create_index.create_index(*messages)
 	output = sort.sort(*index)
 	return output
 
