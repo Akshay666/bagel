@@ -36,7 +36,7 @@ const getUsers = (searchText, data, responseUrl, cb) => {
         experienced.forEach(userObj => {
             let info = {
                 "title": `<@${userObj.user}>${userObj.title ? ", " + userObj.title: ""}`,
-                "text": `_frequent mentions:_ ${users[userObj.user].n_sorted_words.slice(0,maxSkills).map((skillObj) => {
+                "text": `_frequently mentions:_ ${users[userObj.user].n_sorted_words.slice(0,maxSkills).map((skillObj) => {
                     let mention = Object.keys(skillObj)[0];
                     return mention === searchText ? `*${mention}` : mention;
                 }).join(", ")} ${users[userObj.user].m_sorted_comments.length ? "\n*Top Comments*" : ""}`,
@@ -65,8 +65,6 @@ const getUsers = (searchText, data, responseUrl, cb) => {
     }).then((hi)=>{
         cb(searchText, data, responseUrl);
     });
-
-
 };
 
 const getChannels = (searchText, data, responseUrl) => {
@@ -95,7 +93,7 @@ const getChannels = (searchText, data, responseUrl) => {
 
         info = {
             "title": `<#${channelObj.channel}>`,
-            "text": `frequently mentions *${searchText}*. It also mentions ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
+            "text": `_frequently mentions:_ ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
                 let mention = Object.keys(otherWord)[0];
                 return mention === searchText ? `*${mention}*` : mention
             }).join(", ")
@@ -129,7 +127,7 @@ const search = ((req, res) => {
     }
     else {
         query(req.body.text, req.body.response_url);
-        res.send({text: `:tada: You searched for *${req.body.text}*, we think these people/channels could help:`});
+        res.send({text: `:bagel: You searched for *${req.body.text}*, we think these people/channels could help:`});
     }
 
 });
