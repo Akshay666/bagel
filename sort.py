@@ -1,6 +1,6 @@
 import collections
 
-def sort(user_words, user_channels, user_messages, channel_words):
+def sort(user_words, user_channels, user_messages, channel_words, prior_freq):
 	n = 1000
 	m = 10
 
@@ -10,7 +10,7 @@ def sort(user_words, user_channels, user_messages, channel_words):
 			global_frequencies[word] += freq
 
 	def prior(word):
-		return .001
+		return prior_freq[word] if word in prior_freq else 0.0
 
 	def score(word, freq):
 		return freq / (global_frequencies[word] + prior(word))
@@ -38,7 +38,7 @@ def sort(user_words, user_channels, user_messages, channel_words):
 					{word: score(word, freq)}
 					for word, freq in cwords.items()
 				], key=lambda d: -d.items()[0][1])[:n],
-			} for channel, cwords in user_words.items()
+			} for channel, cwords in channel_words.items()
 		},
 	}
 
