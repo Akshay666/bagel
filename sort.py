@@ -27,8 +27,8 @@ def sort(user_words, user_channels, user_messages, channel_words):
 					for message, reactions in user_messages[user].items()
 				], key=lambda d: -d.items()[0][1])[:m],
 				'k_top_channels': sorted([
-					{channel: count}
-					for channel, count in user_channels[user].items()
+					{channel: counts}
+					for channel, counts in user_channels[user].items()
 				], key=lambda d: -d.items()[0][1])[:m],
 			} for user, uwords in user_words.items()
 		},
