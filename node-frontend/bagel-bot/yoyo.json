@@ -32,14 +32,3 @@
   }
 }
 
-{
-  “aws” : {
-user : {
-channel : channel
-messages : {}
-}
-},
-“Topic2” : {
-
-}
-

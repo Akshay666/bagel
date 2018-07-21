@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6767dfe1-dc9d-4467-9027-56751728af37" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node-frontend/bagel-bot/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/node-frontend/bagel-bot/search.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/node-frontend/bagel-bot/yoyo.json" beforeDir="false" afterPath="$PROJECT_DIR$/node-frontend/bagel-bot/yoyo.json" afterDir="false" />
     </list>
@@ -32,8 +31,8 @@
           <file leaf-file-name="search.js" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/node-frontend/bagel-bot/search.js">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="352">
-                  <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+                <state relative-caret-position="396">
+                  <caret line="18" column="6" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
                 </state>
               </provider>
             </entry>
@@ -63,8 +62,8 @@
           <file leaf-file-name="yoyo.json" pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/node-frontend/bagel-bot/yoyo.json">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="541">
-                  <caret line="36" selection-start-line="36" selection-end-line="38" selection-end-column="13" />
+                <state relative-caret-position="638">
+                  <caret line="33" selection-start-line="33" selection-end-line="33" />
                 </state>
               </provider>
             </entry>
@@ -81,8 +80,8 @@
       <list>
         <option value="$PROJECT_DIR$/node-frontend/src/index.js" />
         <option value="$PROJECT_DIR$/node-frontend/src/yoyo.json" />
-        <option value="$PROJECT_DIR$/node-frontend/bagel-bot/search.js" />
         <option value="$PROJECT_DIR$/node-frontend/bagel-bot/yoyo.json" />
+        <option value="$PROJECT_DIR$/node-frontend/bagel-bot/search.js" />
       </list>
     </option>
   </component>
@@ -98,10 +97,9 @@
       <path value="$PROJECT_DIR$/node-frontend/package.json" />
     </packageJsonPaths>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="70" />
+  <component name="ProjectFrameBounds" extendedState="6">
     <option name="y" value="23" />
-    <option name="width" value="1540" />
+    <option name="width" value="1679" />
     <option name="height" value="907" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -168,13 +166,13 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="1740000" />
+    <option name="totallyTimeSpent" value="2059000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="70" y="23" width="1540" height="907" extended-state="0" />
+    <frame x="0" y="23" width="1679" height="907" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22727273" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.060154855" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
@@ -375,8 +373,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/node-frontend/bagel-bot/search.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="352">
-          <caret line="16" column="3" lean-forward="true" selection-start-line="16" selection-start-column="3" selection-end-line="16" selection-end-column="3" />
+        <state relative-caret-position="396">
+          <caret line="18" column="6" lean-forward="true" selection-start-line="18" selection-start-column="6" selection-end-line="18" selection-end-column="6" />
         </state>
       </provider>
     </entry>

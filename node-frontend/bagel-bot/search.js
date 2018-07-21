@@ -11,8 +11,13 @@ const search = ((req,res) => {
     });
 
     let message_per_user = `${experienced[i]} has experience in {}`
-    experienced.forEach(userObj => userObj.)
-    let string = ``
+    let string = "";
+    experienced.forEach(userObj => {
+        let username =  Object.keys(userObj);
+        let string2 = `${username} is good at: `;
+        userObj.n_sorted_words.forEach((word) => string2 += ` - ${word}\n`)
+        string += string2
+    });
     res.send({text: string});
 });
 
