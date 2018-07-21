@@ -31,7 +31,7 @@ def sort(user_words, user_channels, user_messages, channel_words):
 		'channels': {
 			channel: {
 				'n_sorted_words': sorted([
-					{'word': score(word, freq)}
+					{word: score(word, freq)}
 					for word, freq in cwords.items()
 				], key=lambda d: -d.items()[0][1])[:n],
 			} for channel, cwords in user_words.items()
