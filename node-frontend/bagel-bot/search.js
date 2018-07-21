@@ -1,7 +1,10 @@
 const fetch = require('node-fetch');
 
+const ngrokBackend = "http://d53bf794.ngrok.io/full_data_raw"
+
+
 const query = (searchText, response_url) => {
-    fetch("http://d53bf794.ngrok.io/full_data_raw")
+    fetch(ngrokBackend)
         .then((response) => response.json())
         .then((data) => {
             let users = data.users;
@@ -46,6 +49,7 @@ const query = (searchText, response_url) => {
             else {
                 response.text = `Nothing found, sorry :(`
             }
+
             fetch(response_url, {
                 method: "POST",
                 headers: {
@@ -53,9 +57,71 @@ const query = (searchText, response_url) => {
                 },
                 body: JSON.stringify(response),
             })
-                .catch(console.err);
+                .then((hi)=>{
+                    getChannels(searchText, data, response_url);
+                })
+
         });
 };
+
+const getChannels = (searchText, data, responseUrl) => {
+    let channels = data.channels;
+    let experienced = []; // users who have used this queryWord frequently
+    let channelIds = Object.keys(channels);
+
+    channelIds.forEach((channelId) => {
+
+
+        channels[channelId].n_sorted_words.forEach((wordObj) => {
+
+            let word = Object.keys(wordObj)[0];
+            if (word === searchText) {
+                experienced.push({channel: channelId, score: wordObj[word]});
+            }
+        })
+    });
+
+
+    let response = {
+        "text": "*Channels*",
+        "attachments": [],
+    };
+
+     const maxLen = 3;
+        experienced.sort((a, b) => a.score > b.score);
+
+        console.log(experienced);
+
+        experienced = experienced.slice(0, maxLen);
+        experienced.forEach(channelObj => {
+
+            let info = {
+                "title": `<#${channelObj.channel}>`,
+                "text": `frequently mentions *${searchText}*. It also mentions ${channels[channelObj.channel].n_sorted_words.slice(0, maxLen).map((otherWord) => {
+                    let mention = Object.keys(otherWord)[0];
+                    return mention === searchText ? `*${mention}*` : mention
+                }).join(", ")
+                    }`,
+                "mrkdwn_in": [
+                    "text"
+                ]
+            };
+            console.log("hihihih")
+            response.attachments.push(info);
+        });
+
+
+
+    fetch(responseUrl, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(response),
+    })
+        .catch(console.err);
+};
+
 const search = ((req, res) => {
     if(!req.body.text){
         res.send({text: "You didn't search for anything!"});
