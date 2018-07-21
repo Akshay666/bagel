@@ -24,13 +24,13 @@ const getUsers = (searchText, data, responseUrl, cb) => {
         })
     });
     let response = {
-        "text": "*People*",
+        "text": "*People* :wave:",
         "attachments": []
     };
     if(experienced.length) {
         const maxPeople = 3;
         const maxSkills = 5;
-        const maxComment = 2;
+        const maxComment = 1;
         experienced.sort((a, b)=> a.score > b.score);
         experienced = experienced.slice(0,maxPeople);
         experienced.forEach(userObj => {
@@ -39,10 +39,13 @@ const getUsers = (searchText, data, responseUrl, cb) => {
                 "text": `_frequent mentions:_ ${users[userObj.user].n_sorted_words.slice(0,maxSkills).map((skillObj) => {
                     let mention = Object.keys(skillObj)[0];
                     return mention === searchText ? `*${mention}` : mention;
-                }).join(", ")} ${users[userObj.user].m_sorted_comments.length ? "\n*Top Comments*" : ""}`,
+                }).join(", ")}`,
                 "fields": users[userObj.user].m_sorted_comments.slice(0,maxComment).map((commentObj)=> {
                     let comment = Object.keys(commentObj)[0];
-                    return {value:`[${commentObj[comment]} :thumbsup:] ${comment.slice(0,100).replace(/\n|\r/g, "")}`}
+                    // if(!commentObj[comment]){
+                    //     return false;
+                    // }
+                    return {value:`*${commentObj[comment]} *:bagel: ${comment.slice(0,100).replace(/\n|\r/g, " ")} ${comment.length > 100 ? "..." : ""}`}
                 }),
                 "thumb_url": userObj.img,
                 "mrkdwn_in": [
@@ -108,7 +111,7 @@ const getChannels = (searchText, data, responseUrl) => {
     });
 
     let response = {
-        "text": info ? "*Channels*" : "",
+        "text": info ? "*Channels* :slack:" : "",
         "attachments" : [info]
     };
 
