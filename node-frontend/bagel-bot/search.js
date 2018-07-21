@@ -1,14 +1,19 @@
 const search = ((req,res) => {
     let data = require("./yoyo.json");
-    let helper = "someone not on this team....";
+    let experienced = [];
     Object.keys(data).forEach((user) => {
-        data[user].n_sorted_words.forEach((obj)=> {
-            if(Object.keys(obj)[0] === req.body.text){
-                helper = user;
+        data[user].n_sorted_words.forEach((wordObj) => {
+            let word = Object.keys(wordObj)[0];
+            if(word === req.body.text){
+                experienced.push(user);
             }
         })
-    })
-    res.send({text: `I think you should contact ${helper}!`});
+    });
+
+    let message_per_user = `${experienced[i]} has experience in {}`
+    experienced.forEach(userObj => userObj.)
+    let string = ``
+    res.send({text: string});
 });
 
 module.exports = search;

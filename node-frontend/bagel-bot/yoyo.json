@@ -8,5 +8,38 @@
       {"hello I’m here now": 15},
       {"i am great": 2}
   ]
+  },
+  "grace": {
+    "n_sorted_words": [
+      {"aws": 2},
+      {"nlp": 5},
+      {"ml": 50}
+    ],
+    "m_sorted_comments": [
+      {"ok": 15},
+      {"i am super great": 2}
+    ]
+  },
+  "luke": {
+    "n_sorted_words": [
+      {"a": 15},
+      {"p": 50}
+    ],
+    "m_sorted_comments": [
+      {"hello I’m here now": 15},
+      {"i am great": 2}
+    ]
   }
 }
+
+{
+  “aws” : {
+user : {
+channel : channel
+messages : {}
+}
+},
+“Topic2” : {
+
+}
+
