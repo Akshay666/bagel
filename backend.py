@@ -2,6 +2,7 @@ import json
 from BaseHTTPServer import BaseHTTPRequestHandler, HTTPServer
 
 import fetch
+data = fetch.fetch()
 
 class Handler(BaseHTTPRequestHandler):
 	def _set_headers(self):
@@ -10,19 +11,19 @@ class Handler(BaseHTTPRequestHandler):
 		self.end_headers()
 
 	def do_GET(self):
-		data = fetch.fetch()
-
 		self._set_headers()
-		self.wfile.write(json.dumps(data))
+
+		if self.path == '/full_data_raw':
+			self.wfile.write(json.dumps(data))
 
 	def do_HEAD(self):
 		self._set_headers()
-		
+
 	def do_POST(self):
 		# Doesn't do anything with posted data
 		self._set_headers()
 		self.wfile.write("<html><body><h1>POST!</h1></body></html>")
-		
+
 def run(server_class=HTTPServer, handler_class=Handler, port=80):
 	server_address = ('', port)
 	server = server_class(server_address, handler_class)
