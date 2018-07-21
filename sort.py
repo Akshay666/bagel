@@ -1,6 +1,6 @@
 import collections
 
-def sort(user_words, channel_words, user_messages):
+def sort(user_words, user_channels, channel_words, user_messages):
 	n = 1000
 	m = 10
 
