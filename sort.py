@@ -13,7 +13,7 @@ def sort(user_words, user_channels, user_messages, channel_words, prior_freq):
 		return prior_freq[word] if word in prior_freq else 0.0
 
 	def score(word, freq):
-		return freq / (global_frequencies[word] + prior(word))
+		return freq / global_frequencies[word] #+ prior(word))
 
 	return {
 		'users': {
