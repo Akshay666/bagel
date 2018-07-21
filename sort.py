@@ -32,15 +32,15 @@ def sort(user_words, user_channels, user_messages, channel_words, user_info, pri
 				'n_sorted_words': sorted([
 					{word: score(word, freq)}
 					for word, freq in uwords.items()
-				], key=lambda d: -d.items()[0][1])[:n],
+				], key=lambda d: -list(d.items())[0][1])[:n],
 				'm_sorted_comments': sorted([
 					{message: reactions}
 					for message, reactions in user_messages[user].items()
-				], key=lambda d: -d.items()[0][1])[:m],
+				], key=lambda d: -list(d.items())[0][1])[:m],
 				'k_top_channels': sorted([
 					{channel: counts}
 					for channel, counts in user_channels[user].items()
-				], key=lambda d: -d.items()[0][1])[:m],
+				], key=lambda d: -list(d.items())[0][1])[:m],
 			} for user, uwords in user_words.items()
 		},
 		'channels': {
@@ -48,7 +48,7 @@ def sort(user_words, user_channels, user_messages, channel_words, user_info, pri
 				'n_sorted_words': sorted([
 					{word: score(word, freq)}
 					for word, freq in cwords.items()
-				], key=lambda d: -d.items()[0][1])[:n],
+				], key=lambda d: -list(d.items())[0][1])[:n],
 			} for channel, cwords in channel_words.items()
 		},
 	}

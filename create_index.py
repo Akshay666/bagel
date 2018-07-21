@@ -13,7 +13,7 @@ def create_index(messages, user_info):
             u_word_freq = {}
         c_word_freq = channel_words[channel] if channel in channel_words else {}
 
-        for word in re.findall(r"[\w']+", message):
+        for word in re.findall(r"[\w'-]+", message):
             word = word.lower()
             u_word_freq[word] = u_word_freq[word]+1.0 if word in u_word_freq else 1.0
             c_word_freq[word] = c_word_freq[word]+1.0 if word in c_word_freq else 1.0
@@ -37,7 +37,8 @@ if __name__ == "__main__":
     ("user5", "engineering", "what's python?", 0),
     ("user7", "veggies", "where do i buy kale. where?", 1),
     ("user2", "fruits", "what's watermelon", 2),
-    ("user1", "fruits", "where can I buy watermelon?", 2)]
+    ("user1", "fruits", "where can I buy watermelon?", 2),
+    ("user5", "engineering", "I am a full-stack engineer.", 3)]
 
     user_words, user_channels, user_msgs, channel_words = create_index(msgs)
     print(user_words)
