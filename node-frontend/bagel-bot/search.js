@@ -1,7 +1,7 @@
 var fetch = require('node-fetch');
 
 const search = ((req, res) => {
-    let data = fetch("http://4d2561bc.ngrok.io/full_data_raw")
+    fetch("http://4d2561bc.ngrok.io/full_data_raw")
         .then((response) => response.json())
         .then((data) => {
             let experienced = [];
@@ -21,7 +21,7 @@ const search = ((req, res) => {
             experienced.forEach(userId => {
                 let info = {
                     "title": `<@${userId}>`,
-                    "text": `expert in ${data[userId].n_sorted_words.map((skillObj) => Object.keys(skillObj)[0]).join(", ")}`,
+                    "text": `expert in ${data[userId].n_sorted_words.map((skillObj) => Object.keys(skillObj)[0]).slice(4).join(", ")}`,
                     "mrkdwn_in": [
                         "text"
                     ]
