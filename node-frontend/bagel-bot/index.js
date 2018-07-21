@@ -44,6 +44,7 @@ passport.use(new SlackStrategy({
 
 // Initialize an Express application
 const app = express();
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 // Plug the Add to Slack (OAuth) helpers into the express app
@@ -65,7 +66,7 @@ app.get('/auth/slack/callback',
 );
 
 app.post("/search", (req,res) => {
-  res.send({text: "love bagels"});
+  res.send({text: `looks like you typed ${req.body.text}`});
 });
 
 // *** Plug the event adapter into the express app as middleware ***
