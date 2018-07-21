@@ -1,0 +1,12 @@
+{
+  "bryan": {
+    "n_sorted_words": [
+    {"aws": 10},
+    {"amazon": 5}
+  ],
+  "m_sorted_comments": [
+      {"hello I’m here now": 15},
+      {"i am great": 2}
+  ]
+  }
+}
