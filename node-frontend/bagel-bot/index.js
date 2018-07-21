@@ -8,7 +8,7 @@ const SlackStrategy = require('@aoberoi/passport-slack').default.Strategy;
 const http = require('http');
 const express = require('express');
 const bodyParser = require('body-parser');
-
+const search = require("./search.js");
 // *** Initialize event adapter using verification token from environment variables ***
 const slackEvents = slackEventsApi.createSlackEventAdapter(process.env.SLACK_VERIFICATION_TOKEN, {
   includeBody: true
@@ -65,9 +65,7 @@ app.get('/auth/slack/callback',
   }
 );
 
-app.post("/search", (req,res) => {
-  res.send({text: `looks like you typed ${req.body.text}`});
-});
+app.post("/search", search);
 
 // *** Plug the event adapter into the express app as middleware ***
 app.use('/slack/events', slackEvents.expressMiddleware());
