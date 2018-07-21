@@ -45,7 +45,7 @@ const getUsers = (searchText, data, responseUrl, cb) => {
                     // if(!commentObj[comment]){
                     //     return false;
                     // }
-                    return {value:`*${commentObj[comment]} *:bagel: ${comment.slice(0,100).replace(/\n|\r/g, " ")} ${comment.length > 100 ? "..." : ""}`}
+                    return {value:`*${commentObj[comment]} *:arrow_up_small: ${comment.slice(0,100).replace(/\n|\r/g, " ")} ${comment.length > 100 ? "..." : ""}`}
                 }),
                 "thumb_url": userObj.img,
                 "mrkdwn_in": [
