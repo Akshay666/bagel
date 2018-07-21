@@ -16,7 +16,7 @@ def get():
 	channels = [
 		channel['id']
 		for channel in
-		CLIENT.api_call('conversations.list', limit=1000, type='public_channel,private_channel,im,mpim')['channels']
+		CLIENT.api_call('conversations.list', limit=1000, type='public_channel')['channels']
 	]
 
 	messages = [
