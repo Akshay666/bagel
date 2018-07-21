@@ -19,7 +19,27 @@ const query = (searchText, response_url) => {
                         if (word === queryWord){
                             experienced.push({user: username, score: wordObj.score});
                         }
-                    })
+                    });
+            let response = {
+                "attachments": []
+            };
+            if(experienced.length) {
+                const maxLen = 10;
+                experienced.sort((a, b) => a.score > b.score);
+                experienced = experienced.slice(0,maxLen);
+                experienced.forEach(userObj => {
+                    let info = {
+                        "title": `<@${userObj.user}>`,
+                        "text": `frequently mentions ${users[userObj.user].n_sorted_words.slice(0,maxLen).map((skillObj) => {
+                            let mention = Object.keys(skillObj)[0];
+                            return mention === req.body.text ? `*${mention}*` : mention 
+                            }).join(", ")
+                        }`,
+                        "mrkdwn_in": [
+                            "text"
+                        ]
+                    };
+                    response.attachments.push(info);
                 });
                 let response = {
                     "attachments": []
@@ -58,10 +78,9 @@ const query = (searchText, response_url) => {
                     .catch(console.err);
 
                 getChannels();
-
             }
         });
-};
+}
 
 const getChannels = (data, responseUrl) => {
     let users = data.users;
