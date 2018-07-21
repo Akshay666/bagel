@@ -29,6 +29,7 @@ const getUsers = (searchText, data, responseUrl, cb) => {
                     img: users[userName].info.profile.image_original,
                     title: users[userName].info.profile.real_name,
                 }
+
                 experienced.push(relevantInfo);
             }
         })
@@ -61,7 +62,7 @@ const getUsers = (searchText, data, responseUrl, cb) => {
                 "thumb_url": userObj.img,
                 "mrkdwn_in": [
                     "text"
-                ]
+                ],
             });
         });
     }
