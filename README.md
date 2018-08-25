@@ -1,3 +1,3 @@
 Bagel is a slackbot that helps you connect with the people in your workspace who are best able to help you.
 
-![](images/promo.jpg)
+![](images/graphic.png)
